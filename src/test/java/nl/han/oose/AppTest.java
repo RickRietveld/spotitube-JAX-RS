@@ -5,11 +5,11 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Unit test for simple App.
+ * Unit test for simple LoginController.
  */
 public class AppTest {
     /**
-     * Rigorous Test :-)
+     * Rigorous LoginController :-)
      */
     @Test
     public void shouldAnswerWithTrue() {
