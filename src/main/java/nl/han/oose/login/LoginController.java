@@ -21,10 +21,4 @@ public class LoginController {
         }
     }
 
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public LoginRequest getLoginRequest() {
-//        LoginRequest user = new LoginRequest("rickrietveld", "password");
-//        return user;
-//    }
 }
