@@ -1,15 +1,15 @@
 package nl.han.oose.login;
 
-public class LoginRequest {
+public class Account {
 
     private String user;
     private String password;
 
-    public LoginRequest() {
+    public Account() {
 
     }
 
-    public LoginRequest(String user, String password) {
+    public Account(String user, String password) {
         this.user = user;
         this.password = password;
     }
