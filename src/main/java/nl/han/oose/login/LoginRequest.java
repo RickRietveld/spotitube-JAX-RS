@@ -2,15 +2,15 @@ package nl.han.oose.login;
 
 public class LoginRequest {
 
-    private String username;
+    private String user;
     private String password;
 
     public LoginRequest() {
 
     }
 
-    public LoginRequest(String username, String password) {
-        this.username = username;
+    public LoginRequest(String user, String password) {
+        this.user = user;
         this.password = password;
     }
 
@@ -24,13 +24,13 @@ public class LoginRequest {
         this.password = password;
     }
 
-    public String getUsername() {
+    public String getUser() {
 
-        return username;
+        return user;
     }
 
-    public void setUsername(String username) {
+    public void setUser(String user) {
 
-        this.username = username;
+        this.user = user;
     }
 }

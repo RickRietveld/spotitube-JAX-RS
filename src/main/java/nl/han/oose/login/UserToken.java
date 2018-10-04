@@ -2,25 +2,25 @@ package nl.han.oose.login;
 
 public class UserToken {
 
-    private String username;
+    private String user;
     private String token;
 
     public UserToken() {
 
     }
 
-    public UserToken(String token, String username) {
+    public UserToken(String token, String user) {
         this.token = token;
-        this.username = username;
+        this.user = user;
     }
 
 
-    public String getUsername() {
-        return username;
+    public String getUser() {
+        return user;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getToken() {

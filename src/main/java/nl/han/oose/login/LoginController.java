@@ -14,8 +14,8 @@ public class LoginController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(LoginRequest user) {
-        if (user.getUsername().equals("rickrietveld") && user.getPassword().equals("password")) {
-            return Response.status(Response.Status.ACCEPTED).entity(new UserToken("1234-1234-1234", user.getUsername())).build();
+        if (user.getUser().equals("rickrietveld") && user.getPassword().equals("password")) {
+            return Response.status(Response.Status.ACCEPTED).entity(new UserToken("1234-1234-1234", user.getUser())).build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }

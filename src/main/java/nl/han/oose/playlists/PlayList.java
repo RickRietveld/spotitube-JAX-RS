@@ -1,52 +1,39 @@
 package nl.han.oose.playlists;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayList {
 
-    private int id;
-    private String name;
-    private boolean owner;
-    private String[] tracks;
+    private static List<PlayListResource> playListResources;
+    private int length;
 
     public PlayList() {
+        playListResources = new ArrayList<>();
+        fillPlayListResources();
+        getLength();
+    }
+
+    public void fillPlayListResources() {
+        if (playListResources.isEmpty()) {
+            playListResources.add(new PlayListResource(1, "Death metal", true, new String[]{}));
+            playListResources.add(new PlayListResource(2, "Pop", false, new String[]{}));
+        }
+    }
+
+    public List<PlayListResource> getPlaylists() {
+        return playListResources;
 
     }
 
-    public PlayList(int id, String name, boolean owner, String[] tracks) {
-        this.id = id;
-        this.name = name;
-        this.owner = owner;
-        this.tracks = tracks;
+
+    public int getLength() {
+        length = playListResources.size();
+        return length;
     }
 
-    public int getId() {
-        return id;
-    }
+    public void setLength(int length) {
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isOwner() {
-        return owner;
-    }
-
-    public void setOwner(boolean owner) {
-        this.owner = owner;
-    }
-
-    public String[] getTracks() {
-        return tracks;
-    }
-
-    public void setTracks(String[] tracks) {
-        this.tracks = tracks;
+        this.length = length;
     }
 }
