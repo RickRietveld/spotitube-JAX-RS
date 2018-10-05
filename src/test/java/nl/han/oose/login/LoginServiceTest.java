@@ -1,5 +1,9 @@
 package nl.han.oose.login;
 
+import nl.han.oose.entity.Account;
+import nl.han.oose.entity.UserToken;
+import nl.han.oose.service.LoginService;
+import nl.han.oose.service.LoginServiceImpl;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,7 +21,7 @@ public class LoginServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        sut = new LoginService();
+        sut = new LoginServiceImpl();
     }
 
     @Test

@@ -1,6 +1,6 @@
-package nl.han.oose.playlists;
+package nl.han.oose.entity;
 
-public class PlayListResource {
+public class PlayList {
 
     private int id;
     private String name;
@@ -8,10 +8,7 @@ public class PlayListResource {
     private String[] tracks;
 
 
-    public PlayListResource() {
-    }
-
-    public PlayListResource(int id, String name, boolean owner, String[] tracks) {
+    public PlayList(int id, String name, boolean owner, String[] tracks) {
         this.id = id;
         this.name = name;
         this.owner = owner;
