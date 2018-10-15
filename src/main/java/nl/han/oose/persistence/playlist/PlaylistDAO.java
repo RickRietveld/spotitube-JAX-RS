@@ -21,7 +21,7 @@ public class PlaylistDAO extends Datamapper {
     }
 
     public PlaylistCollection getAllPlaylists() {
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         ArrayList<Playlist> playlists = new ArrayList<>();
         PlaylistCollection playlistsCollection = null;
 
@@ -47,6 +47,32 @@ public class PlaylistDAO extends Datamapper {
             e.printStackTrace();
         }
         return playlistsCollection;
+    }
+
+    public Playlist getPlaylist(int id) {
+        ResultSet resultSet;
+        PreparedStatement preparedStatement = null;
+        Playlist playlist = null;
+
+        try {
+            Connection connection = connectionFactory.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM playlists WHERE id = ?;");
+            preparedStatement.setInt(1, id);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                playlist = new Playlist();
+                playlist.setId(resultSet.getInt("id"));
+                playlist.setName(resultSet.getString("name"));
+                playlist.setOwner(resultSet.getBoolean("owner"));
+                playlist.setTracks(null);
+            }
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return playlist;
     }
 
 //    public List<Playlist> getPlaylists(String userToken) {

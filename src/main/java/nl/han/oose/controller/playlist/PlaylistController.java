@@ -3,10 +3,7 @@ package nl.han.oose.controller.playlist;
 import nl.han.oose.service.playlist.PlaylistService;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -21,6 +18,14 @@ public class PlaylistController {
     public Response all(@QueryParam("token") String token) {
 
         return Response.ok(playlistService.allPlaylists()).build();
+
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{id}/tracks")
+    public Response setTracks(@PathParam("id") int playlistId, @QueryParam("token") String token) {
+        return Response.ok(playlistService.tracksByPlaylistId(playlistId)).build();
 
     }
 

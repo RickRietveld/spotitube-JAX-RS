@@ -9,6 +9,15 @@ public class PlaylistCollection {
     private ArrayList<Playlist> playlists;
     private int length;
 
+    public PlaylistCollection(ArrayList<Playlist> playlists, int length) {
+        this.playlists = playlists;
+        this.length = length;
+    }
+
+    public PlaylistCollection() {
+
+    }
+
     public PlaylistCollection(ArrayList<Playlist> playlists) {
         this.playlists = playlists;
     }

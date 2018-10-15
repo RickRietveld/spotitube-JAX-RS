@@ -1,8 +1,6 @@
 package nl.han.oose.entity.account;
 
-import nl.han.oose.entity.IEntity;
-
-public class UserToken implements IEntity {
+public class UserToken {
 
     private String user;
     private String token;

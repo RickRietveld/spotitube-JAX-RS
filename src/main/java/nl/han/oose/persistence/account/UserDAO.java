@@ -5,6 +5,7 @@ import nl.han.oose.persistence.ConnectionFactory;
 import nl.han.oose.persistence.Datamapper;
 
 import javax.inject.Inject;
+import javax.security.auth.login.LoginException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,32 +38,25 @@ public class UserDAO extends Datamapper {
         return accounts;
     }
 
-    public Account login(Account account) {
+    public boolean verifyLogin(Account account) throws LoginException {
         try (
                 Connection connection = connectionFactory.getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE user = ? AND password = ?;")
-
+                PreparedStatement query = connection.prepareStatement("SELECT * FROM user WHERE user = ? AND password = ?;");
         ) {
-            statement.setString(1, account.getUser());
-            statement.setString(2, account.getPassword());
-
-            ResultSet resultSet = statement.executeQuery();
-
+            query.setString(1, account.getUser());
+            query.setString(2, account.getPassword());
+            ResultSet resultSet = query.executeQuery();
             resultSet.last();
-            if (resultSet.getRow() <= 0) {
-                return null;
+            if (resultSet.getRow() == 1) {
+                return true;
             } else {
-                return new Account(
-                        resultSet.getString("user"),
-                        resultSet.getString("password"));
+                throw new LoginException("Wrong username or password!");
             }
-        } catch (
-                SQLException e) {
+
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
-    //public Account persistAccount(Account login) { //id
 
     public void persistAccount(Account account) {
         try (

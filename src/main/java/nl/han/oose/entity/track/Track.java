@@ -1,26 +1,33 @@
 package nl.han.oose.entity.track;
 
-import nl.han.oose.entity.IEntity;
 
-public abstract class Track implements IEntity {
+public class Track {
 
     private int id;
     private String title;
     private String performer;
     private int duration;
+    private String album;
+    private int playcount;
+    private String publicationDate;
+    private String description;
     private boolean offlineAvailable;
 
-    public Track() {
-
-    }
-
-
-    public Track(int id, String title, String performer, int duration, boolean offlineAvailable) {
+    public Track(int id, String title, String performer, int duration, String album,
+                 int playcount, String publicationDate, String description, boolean offlineAvailable) {
         this.id = id;
         this.title = title;
         this.performer = performer;
         this.duration = duration;
+        this.album = album;
+        this.playcount = playcount;
+        this.publicationDate = publicationDate;
+        this.description = description;
         this.offlineAvailable = offlineAvailable;
+    }
+
+    public Track() {
+
     }
 
     public int getId() {
@@ -48,16 +55,46 @@ public abstract class Track implements IEntity {
     }
 
     public int getDuration() {
-
         return duration;
     }
 
     public void setDuration(int duration) {
-
         this.duration = duration;
     }
 
-    public boolean isOfflineAvailable() {
+    public String getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
+    }
+
+    public int getPlaycount() {
+        return playcount;
+    }
+
+    public void setPlaycount(int playcount) {
+        this.playcount = playcount;
+    }
+
+    public String getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(String publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean getOfflineAvailable() {
         return offlineAvailable;
     }
 
