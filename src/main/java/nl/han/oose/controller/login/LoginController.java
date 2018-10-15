@@ -1,7 +1,7 @@
-package nl.han.oose.controller;
+package nl.han.oose.controller.login;
 
-import nl.han.oose.entity.Account;
-import nl.han.oose.service.LoginService;
+import nl.han.oose.entity.account.Account;
+import nl.han.oose.service.login.LoginService;
 
 import javax.inject.Inject;
 import javax.security.auth.login.LoginException;
@@ -23,7 +23,7 @@ public class LoginController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(Account user) {
         try {
-            return Response.ok().entity(loginService.login(user)).build();
+            return Response.ok().entity(loginService.verifyLogin(user)).build();
         } catch (LoginException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }

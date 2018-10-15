@@ -1,12 +1,19 @@
-package nl.han.oose.entity;
+package nl.han.oose.entity.track;
 
-public abstract class Track {
+import nl.han.oose.entity.IEntity;
+
+public abstract class Track implements IEntity {
 
     private int id;
     private String title;
     private String performer;
     private int duration;
     private boolean offlineAvailable;
+
+    public Track() {
+
+    }
+
 
     public Track(int id, String title, String performer, int duration, boolean offlineAvailable) {
         this.id = id;
@@ -41,10 +48,12 @@ public abstract class Track {
     }
 
     public int getDuration() {
+
         return duration;
     }
 
     public void setDuration(int duration) {
+
         this.duration = duration;
     }
 

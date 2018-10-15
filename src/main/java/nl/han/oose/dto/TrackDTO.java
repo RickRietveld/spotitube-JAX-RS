@@ -1,8 +1,8 @@
 package nl.han.oose.dto;
 
-import nl.han.oose.entity.Song;
-import nl.han.oose.entity.Track;
-import nl.han.oose.entity.Video;
+import nl.han.oose.entity.track.Song;
+import nl.han.oose.entity.track.Track;
+import nl.han.oose.entity.track.Video;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,7 @@ public class TrackDTO {
     }
 
     public List<Track> getTracks() {
+
         return tracks;
     }
 
@@ -37,6 +38,7 @@ public class TrackDTO {
 
         for (Track track : tracks) {
             totalDuration += track.getDuration();
+            System.out.println(totalDuration);
         }
         return totalDuration;
     }

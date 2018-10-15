@@ -1,6 +1,8 @@
-package nl.han.oose.entity;
+package nl.han.oose.entity.track;
 
-public class Song extends Track {
+import nl.han.oose.entity.IEntity;
+
+public class Song extends Track implements IEntity {
 
     private String album;
 

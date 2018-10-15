@@ -1,6 +1,8 @@
-package nl.han.oose.entity;
+package nl.han.oose.entity.track;
 
-public class Video extends Track {
+import nl.han.oose.entity.IEntity;
+
+public class Video extends Track implements IEntity {
 
     private int playcount;
     private String publicationDate;

@@ -1,19 +1,16 @@
-package nl.han.oose.entity;
+package nl.han.oose.entity.playlist;
 
-public class PlayList {
+import nl.han.oose.entity.track.Track;
+
+import java.util.List;
+
+public class Playlist {
 
     private int id;
     private String name;
     private boolean owner;
-    private String[] tracks;
+    private List<Track> tracks;
 
-
-    public PlayList(int id, String name, boolean owner, String[] tracks) {
-        this.id = id;
-        this.name = name;
-        this.owner = owner;
-        this.tracks = tracks;
-    }
 
     public int getId() {
         return id;
@@ -39,11 +36,11 @@ public class PlayList {
         this.owner = owner;
     }
 
-    public String[] getTracks() {
+    public List<Track> getTracks() {
         return tracks;
     }
 
-    public void setTracks(String[] tracks) {
+    public void setTracks(List<Track> tracks) {
         this.tracks = tracks;
     }
 }

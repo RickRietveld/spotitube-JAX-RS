@@ -1,4 +1,4 @@
-package nl.han.oose.controller;
+package nl.han.oose.controller.track;
 
 import nl.han.oose.dto.TrackDTO;
 

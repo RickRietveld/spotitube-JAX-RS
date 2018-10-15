@@ -1,9 +1,13 @@
-package nl.han.oose.entity;
+package nl.han.oose.entity.account;
 
-public class UserToken {
+import nl.han.oose.entity.IEntity;
+
+public class UserToken implements IEntity {
 
     private String user;
     private String token;
+
+    //java.util.UUID;  System.out.println(UUID.random.UUID().toString());
 
     public UserToken() {
 

@@ -1,6 +1,8 @@
-package nl.han.oose.entity;
+package nl.han.oose.entity.account;
 
-public class Account {
+import nl.han.oose.entity.IEntity;
+
+public class Account implements IEntity {
 
     private String user;
     private String password;
