@@ -43,8 +43,8 @@ public class TokenDAO {
     }
 
 
-    public boolean checkIfTokenAlreadyExcists(String username) {
-        boolean tokenExcists = false;
+    public boolean checkIfTokenAlreadyExists(String username) {
+        boolean tokenExists = false;
 
         try (
                 Connection connection = connectionFactory.getConnection();
@@ -54,12 +54,12 @@ public class TokenDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.last();
             if (resultSet.getRow() > 0) {
-                tokenExcists = true;
+                tokenExists = true;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return tokenExcists;
+        return tokenExists;
     }
 
 
@@ -122,6 +122,25 @@ public class TokenDAO {
             throw new RuntimeException(e);
         }
         return isValid;
+    }
+
+    public UserToken getExistingUserAndToken(String username) {
+        Connection connection = connectionFactory.getConnection();
+        UserToken userToken = new UserToken();
+        try {
+            String query = "SELECT * FROM token where user = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                userToken.setToken(rs.getString("token"));
+                userToken.setUser(rs.getString("user"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userToken;
     }
 
 }
