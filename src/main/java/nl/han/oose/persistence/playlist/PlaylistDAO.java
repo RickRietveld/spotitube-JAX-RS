@@ -94,14 +94,17 @@ public class PlaylistDAO extends Datamapper {
 
         try (
                 Connection connection = connectionFactory.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT SUM(duration) AS summedDuration FROM track WHERE id = ?")
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT SUM(duration) AS summedDuration FROM track t LEFT JOIN trackPlaylistRelation " +
+                        "ON trackPlaylistRelation.trackId = t.id AND trackPlaylistRelation.playlistId = ? " +
+                        "WHERE t.id IN(SELECT trackId FROM trackPlaylistRelation WHERE playlistId = ?);")
         ) {
-
             preparedStatement.setInt(1, id);
+            preparedStatement.setInt(2, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 playlistLength += resultSet.getInt("summedDuration");
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
