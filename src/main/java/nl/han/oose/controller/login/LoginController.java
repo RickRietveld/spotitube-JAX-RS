@@ -4,7 +4,7 @@ import nl.han.oose.entity.account.Account;
 import nl.han.oose.service.login.LoginService;
 
 import javax.inject.Inject;
-import javax.security.auth.login.LoginException;
+import javax.naming.AuthenticationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -24,7 +24,7 @@ public class LoginController {
     public Response login(Account user) {
         try {
             return Response.ok().entity(loginService.login(user)).build();
-        } catch (LoginException e) {
+        } catch (AuthenticationException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }

@@ -72,7 +72,7 @@ public class TrackDAO extends Datamapper {
         }
     }
 
-    public TrackCollection getAttachedTracks(int id) {
+    public TrackCollection getAttachedTracks(int playlistId) {
         TrackCollection trackCollection = new TrackCollection();
 
         try (
@@ -81,8 +81,8 @@ public class TrackDAO extends Datamapper {
                         "ON trackPlaylistRelation.trackId = t.id AND trackPlaylistRelation.playlistId = ? " +
                         "WHERE t.id IN(SELECT trackId FROM trackPlaylistRelation WHERE playlistId = ?);")
         ) {
-            preparedStatement.setInt(1, id);
-            preparedStatement.setInt(2, id);
+            preparedStatement.setInt(1, playlistId);
+            preparedStatement.setInt(2, playlistId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -105,7 +105,6 @@ public class TrackDAO extends Datamapper {
         track.setPublicationDate(resultSet.getString("publicationDate"));
         track.setDescription(resultSet.getString("description"));
         track.setOfflineAvailable(resultSet.getBoolean("offlineAvailable"));
-
         tracks.add(track);
     }
 

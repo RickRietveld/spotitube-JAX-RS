@@ -7,7 +7,7 @@ import nl.han.oose.persistence.account.UserDAO;
 
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
-import javax.security.auth.login.LoginException;
+import javax.naming.AuthenticationException;
 
 @Default
 public class LoginServiceImpl implements LoginService {
@@ -20,14 +20,13 @@ public class LoginServiceImpl implements LoginService {
 
 
     @Override
-    public UserToken login(Account account) throws LoginException {
-
+    public UserToken login(Account account) throws AuthenticationException {
         if (tokenDAO.checkIfTokenAlreadyExists(account.getUser())) {
             return tokenDAO.getExistingUserAndToken(account.getUser());
         } else if (userDAO.verifyLogin(account)) {
             return tokenDAO.getNewToken(account);
         } else {
-            throw new LoginException("Wrong credentials");
+            throw new AuthenticationException("Wrong credentials.");
         }
     }
 

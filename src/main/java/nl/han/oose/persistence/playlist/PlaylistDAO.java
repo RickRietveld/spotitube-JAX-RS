@@ -31,19 +31,22 @@ public class PlaylistDAO extends Datamapper {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
+                Playlist playlist = new Playlist();
+                playlist.setId(resultSet.getInt("id"));
+                playlist.setName(resultSet.getString("name"));
                 String accountUser = resultSet.getString("user");
-                boolean owner = false;
+                playlist.setOwner(false);
+                playlist.setTracks(new ArrayList<>());
                 if (accountUser.equals(userToken.getUser())) {
-                    owner = true;
+                    playlist.setOwner(true);
                 }
-                playlistCollection.getPlaylists().add(new Playlist(id, name, owner, new ArrayList<>()));
-                playlistLength += getLengthOfPlaylist(id);
+
+                playlistCollection.getPlaylists().add(playlist);
+                playlistLength += getLengthOfPlaylist(resultSet.getInt("id"));
             }
             playlistCollection.setLength(playlistLength);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return playlistCollection;
     }
@@ -73,7 +76,7 @@ public class PlaylistDAO extends Datamapper {
 
 
     public PlaylistCollection deletePlaylist(UserToken userToken, int id) {
-        PlaylistCollection playlistCollection = null;
+        PlaylistCollection playlistCollection;
         try (
                 Connection connection = connectionFactory.getConnection();
                 PreparedStatement statement = connection.prepareStatement("DELETE FROM playlist WHERE id = ?;")
@@ -84,7 +87,7 @@ public class PlaylistDAO extends Datamapper {
 
             playlistCollection = getAllPlaylists(userToken);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return playlistCollection;
     }
@@ -113,7 +116,7 @@ public class PlaylistDAO extends Datamapper {
     }
 
     public PlaylistCollection renamePlaylist(UserToken userToken, Playlist playlist) {
-        PlaylistCollection playlistCollection = null;
+        PlaylistCollection playlistCollection;
         try (
                 Connection connection = connectionFactory.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement("UPDATE playlist SET name = ? WHERE id = ?;")
@@ -125,7 +128,7 @@ public class PlaylistDAO extends Datamapper {
 
             playlistCollection = getAllPlaylists(userToken);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return playlistCollection;
     }

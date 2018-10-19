@@ -80,7 +80,18 @@ public class TokenDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public void removeTokenFromList(String user) {
+        try (
+                Connection connection = connectionFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM token WHERE user = ?;")
+        ) {
+            preparedStatement.setString(1, user);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String generateToken() {
@@ -91,7 +102,7 @@ public class TokenDAO {
     private String getDatetime() {
         Date date = new Date();
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         c.setTime(date);
         c.add(Calendar.DATE, 1);
         date = c.getTime();
@@ -112,10 +123,12 @@ public class TokenDAO {
             LocalDate currentDate = LocalDate.now();
 
             while (resultSet.next()) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LocalDate expiryDate = LocalDate.parse(resultSet.getString("expiryDate"), formatter);
                 if (expiryDate.isAfter(currentDate)) {
                     isValid = true;
+                } else {
+                    removeTokenFromList(userToken.getUser());
                 }
             }
         } catch (SQLException e) {
@@ -123,6 +136,7 @@ public class TokenDAO {
         }
         return isValid;
     }
+
 
     public UserToken getExistingUserAndToken(String username) {
         Connection connection = connectionFactory.getConnection();
