@@ -2,10 +2,8 @@ package nl.han.oose.entity.account;
 
 public class UserToken {
 
-    private String user;
     private String token;
-
-    //java.util.UUID;  System.out.println(UUID.random.UUID().toString());
+    private String user;
 
     public UserToken() {
 

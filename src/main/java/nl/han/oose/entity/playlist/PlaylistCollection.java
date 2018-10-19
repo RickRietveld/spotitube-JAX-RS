@@ -2,27 +2,18 @@ package nl.han.oose.entity.playlist;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class PlaylistCollection {
 
-    private ArrayList<Playlist> playlists;
+    private List<Playlist> playlists = new ArrayList<>();
     private int length;
 
-    public PlaylistCollection(ArrayList<Playlist> playlists, int length) {
-        this.playlists = playlists;
-        this.length = length;
-    }
-
     public PlaylistCollection() {
-
     }
 
-    public PlaylistCollection(ArrayList<Playlist> playlists) {
-        this.playlists = playlists;
-    }
-
-    public ArrayList<Playlist> getPlaylists() {
+    public List<Playlist> getPlaylists() {
 
         return this.playlists;
     }

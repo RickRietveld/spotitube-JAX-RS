@@ -101,4 +101,8 @@ public class Track {
     public void setOfflineAvailable(boolean offlineAvailable) {
         this.offlineAvailable = offlineAvailable;
     }
+
+    public boolean isOfflineAvailable() {
+        return offlineAvailable;
+    }
 }

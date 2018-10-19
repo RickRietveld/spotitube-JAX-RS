@@ -5,12 +5,13 @@ import nl.han.oose.entity.account.UserToken;
 import nl.han.oose.persistence.ConnectionFactory;
 
 import javax.inject.Inject;
-import javax.naming.AuthenticationException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
@@ -20,42 +21,66 @@ public class TokenDAO {
     @Inject
     private ConnectionFactory connectionFactory;
 
+    public UserToken getUserToken(String token) {
 
-    public UserToken getToken(String token) throws AuthenticationException {
+        UserToken userToken = null;
+
         try (
                 Connection connection = connectionFactory.getConnection();
-                PreparedStatement query = connection.prepareStatement("SELECT * FROM token WHERE token = ?;")
+                PreparedStatement getTokenStatement = connection.prepareStatement("SELECT * FROM token WHERE token = ?")
         ) {
-            query.setString(1, token);
-            ResultSet resultSet = query.executeQuery();
-            resultSet.last();
-            if (resultSet.getRow() == 1) {
-                return new UserToken(resultSet.getString("user"), token);
-            } else {
-                throw new AuthenticationException();
+            getTokenStatement.setString(1, token);
+            ResultSet resultSet = getTokenStatement.executeQuery();
+            while (resultSet.next()) {
+                String tokenString = resultSet.getString("token");
+                String user = resultSet.getString("user");
+                userToken = new UserToken(tokenString, user);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return userToken;
     }
+
+
+    public boolean checkIfTokenAlreadyExcists(String username) {
+        boolean tokenExcists = false;
+
+        try (
+                Connection connection = connectionFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM token WHERE user = ?;")
+        ) {
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.last();
+            if (resultSet.getRow() > 0) {
+                tokenExcists = true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tokenExcists;
+    }
+
 
     public UserToken getNewToken(Account login) {
         String user = login.getUser();
         String token = generateToken();
         String currentDatetime = getDatetime();
-        UserToken loginToken = new UserToken(user, token);
+        UserToken newLoginToken = new UserToken(token, user);
         try (
                 Connection connection = connectionFactory.getConnection();
-                PreparedStatement query = connection.prepareStatement("INSERT INTO token (user, token, expiry_date) VALUES (?, ?, ?);")
+                PreparedStatement query = connection.prepareStatement("INSERT INTO token (user, token, expiryDate) VALUES (?, ?, ?);")
         ) {
             query.setString(1, user);
             query.setString(2, token);
             query.setString(3, currentDatetime);
             query.execute();
-            return loginToken;
+            return newLoginToken;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     private String generateToken() {
@@ -71,6 +96,32 @@ public class TokenDAO {
         c.add(Calendar.DATE, 1);
         date = c.getTime();
         return dateFormat.format(date);
+    }
+
+    public boolean isTokenValid(UserToken userToken) {
+        boolean isValid = false;
+
+        try (
+                Connection connection = connectionFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "SELECT * FROM token WHERE token = ? AND user = ?;")
+        ) {
+            preparedStatement.setString(1, userToken.getToken());
+            preparedStatement.setString(2, userToken.getUser());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            LocalDate currentDate = LocalDate.now();
+
+            while (resultSet.next()) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+                LocalDate expiryDate = LocalDate.parse(resultSet.getString("expiryDate"), formatter);
+                if (expiryDate.isAfter(currentDate)) {
+                    isValid = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return isValid;
     }
 
 }

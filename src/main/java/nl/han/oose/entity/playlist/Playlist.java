@@ -11,6 +11,10 @@ public class Playlist {
     private boolean owner;
     private List<Track> tracks;
 
+    public Playlist() {
+
+    }
+
     public Playlist(int id, String name, boolean owner, List<Track> tracks) {
         this.id = id;
         this.name = name;
@@ -18,9 +22,6 @@ public class Playlist {
         this.tracks = tracks;
     }
 
-    public Playlist() {
-
-    }
 
     public int getId() {
         return id;
@@ -43,6 +44,7 @@ public class Playlist {
     }
 
     public void setOwner(boolean owner) {
+
         this.owner = owner;
     }
 
