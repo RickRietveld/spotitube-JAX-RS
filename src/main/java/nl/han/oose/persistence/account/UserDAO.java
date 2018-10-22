@@ -5,7 +5,7 @@ import nl.han.oose.persistence.ConnectionFactory;
 import nl.han.oose.persistence.Datamapper;
 
 import javax.inject.Inject;
-import javax.naming.AuthenticationException;
+import javax.security.auth.login.LoginException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +38,7 @@ public class UserDAO extends Datamapper {
         return accounts;
     }
 
-    public boolean verifyLogin(Account account) throws AuthenticationException {
+    public boolean verifyLogin(Account account) throws LoginException {
         try (
                 Connection connection = connectionFactory.getConnection();
                 PreparedStatement query = connection.prepareStatement("SELECT * FROM user WHERE user = ? AND password = ?;");
@@ -50,7 +50,7 @@ public class UserDAO extends Datamapper {
             if (resultSet.getRow() == 1) {
                 return true;
             } else {
-                throw new AuthenticationException("Wrong credentials.");
+                throw new LoginException("Wrong credentials.");
             }
 
         } catch (SQLException e) {

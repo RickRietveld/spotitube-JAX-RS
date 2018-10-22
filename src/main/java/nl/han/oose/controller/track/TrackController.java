@@ -24,7 +24,7 @@ public class TrackController {
         try {
             return Response.status(Response.Status.OK).entity(trackService.getAvailableTracks(token, playlistId)).build();
         } catch (AuthenticationException e) {
-            return Response.status(Response.Status.FORBIDDEN).build();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
 

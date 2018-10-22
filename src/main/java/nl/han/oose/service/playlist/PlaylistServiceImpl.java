@@ -34,7 +34,8 @@ public class PlaylistServiceImpl implements PlaylistService {
     public PlaylistCollection addPlaylist(String token, Playlist playlist) throws AuthenticationException {
         UserToken userToken = tokenDAO.getUserToken(token);
         if (tokenDAO.isTokenValid(userToken)) {
-            return playlistDAO.addPlaylist(userToken, playlist);
+            playlistDAO.addPlaylist(userToken, playlist);
+            return getAllPlaylists(token);
         } else {
             throw new AuthenticationException("Usertoken mismatch.");
         }
@@ -44,7 +45,8 @@ public class PlaylistServiceImpl implements PlaylistService {
     public PlaylistCollection renamePlaylist(String token, Playlist playlist) throws AuthenticationException {
         UserToken userToken = tokenDAO.getUserToken(token);
         if (tokenDAO.isTokenValid(userToken)) {
-            return playlistDAO.renamePlaylist(userToken, playlist);
+            playlistDAO.renamePlaylist(playlist);
+            return getAllPlaylists(token);
         } else {
             throw new AuthenticationException("Usertoken mismatch.");
         }
@@ -55,7 +57,8 @@ public class PlaylistServiceImpl implements PlaylistService {
     public PlaylistCollection deletePlaylist(String token, int id) throws AuthenticationException {
         UserToken userToken = tokenDAO.getUserToken(token);
         if (tokenDAO.isTokenValid(userToken)) {
-            return playlistDAO.deletePlaylist(userToken, id);
+            playlistDAO.deletePlaylist(id);
+            return getAllPlaylists(token);
         } else {
             throw new AuthenticationException("Usertoken mismatch.");
         }

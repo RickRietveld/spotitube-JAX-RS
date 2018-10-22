@@ -21,7 +21,7 @@ public class PlaylistController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllPlayLists(@QueryParam("token") String token) {
+    public Response getAllPlaylists(@QueryParam("token") String token) {
         try {
             return Response.status(Response.Status.OK).entity(playlistService.getAllPlaylists(token)).build();
         } catch (AuthenticationException e) {
@@ -92,7 +92,7 @@ public class PlaylistController {
         try {
             return Response.status(Response.Status.OK).entity(trackService.removeTrackFromPlaylist(token, playlistId, trackId)).build();
         } catch (AuthenticationException e) {
-            return Response.status(Response.Status.FORBIDDEN).build();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
 

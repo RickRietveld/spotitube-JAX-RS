@@ -51,9 +51,8 @@ public class PlaylistDAO extends Datamapper {
         return playlistCollection;
     }
 
-    public PlaylistCollection addPlaylist(UserToken userToken, Playlist playlist) {
+    public void addPlaylist(UserToken userToken, Playlist playlist) {
         playlist.setOwner(true);
-        PlaylistCollection playlistCollection;
         try (Connection connection = connectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement("INSERT INTO playlist (name, user, owner) VALUES (?, ?, ?);"
                      , Statement.RETURN_GENERATED_KEYS)
@@ -67,16 +66,13 @@ public class PlaylistDAO extends Datamapper {
             if (tableKeys.next()) {
                 tableKeys.getInt(1);
             }
-            playlistCollection = getAllPlaylists(userToken);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return playlistCollection;
     }
 
 
-    public PlaylistCollection deletePlaylist(UserToken userToken, int id) {
-        PlaylistCollection playlistCollection;
+    public void deletePlaylist(int id) {
         try (
                 Connection connection = connectionFactory.getConnection();
                 PreparedStatement statement = connection.prepareStatement("DELETE FROM playlist WHERE id = ?;")
@@ -85,11 +81,9 @@ public class PlaylistDAO extends Datamapper {
 
             statement.execute();
 
-            playlistCollection = getAllPlaylists(userToken);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return playlistCollection;
     }
 
     public int getLengthOfPlaylist(int id) {
@@ -115,8 +109,7 @@ public class PlaylistDAO extends Datamapper {
         return playlistLength;
     }
 
-    public PlaylistCollection renamePlaylist(UserToken userToken, Playlist playlist) {
-        PlaylistCollection playlistCollection;
+    public void renamePlaylist(Playlist playlist) {
         try (
                 Connection connection = connectionFactory.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement("UPDATE playlist SET name = ? WHERE id = ?;")
@@ -126,11 +119,9 @@ public class PlaylistDAO extends Datamapper {
 
             preparedStatement.execute();
 
-            playlistCollection = getAllPlaylists(userToken);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return playlistCollection;
     }
 
 
