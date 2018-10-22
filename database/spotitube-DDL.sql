@@ -1,3 +1,7 @@
+drop database spotitube;
+create database spotitube;
+use spotitube;
+
 create table playlist
 (
 	id int auto_increment
@@ -24,10 +28,10 @@ create table track
 	title varchar(255) not null,
 	performer varchar(255) not null,
 	duration int(255) not null,
-	album varchar(255) not null,
-	playcount int(255) not null,
-	publicationDate varchar(255) not null,
-	description varchar(255) not null,
+	album varchar(255) null,
+	playcount int(255) null,
+	publicationDate varchar(255) null,
+	description varchar(255) null,
 	offlineAvailable tinyint(1) not null
 )
 ;
@@ -54,6 +58,7 @@ create table user
 	password varchar(255) not null
 )
 ;
+
 
 
 
