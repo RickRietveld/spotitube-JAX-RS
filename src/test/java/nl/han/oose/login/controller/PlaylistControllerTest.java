@@ -178,5 +178,29 @@ public class PlaylistControllerTest {
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), playlistResponse.getStatus());
     }
 
+    @Test
+    public void testThatGetAttachedTracksRespondsOK() throws AuthenticationException {
+        TrackCollection trackCollection = new TrackCollection();
+        int playlistId = 1;
+        String token = "9999-9999-9999";
+
+        Mockito.when(trackServiceMock.getAttachedTracks(Mockito.anyString(), Mockito.anyInt())).thenReturn(trackCollection);
+        Response playlistResponse = sut.getAttachedTracks(token, playlistId);
+
+        assertEquals(Response.Status.OK.getStatusCode(), playlistResponse.getStatus());
+        assertEquals(trackCollection, playlistResponse.getEntity());
+    }
+
+    @Test
+    public void testThatGetAttachedTracksRespondsUNAUTHORIZED() throws AuthenticationException {
+        int playlistId = 1;
+        String token = "9999-9999-9999";
+
+        Mockito.when(trackServiceMock.getAttachedTracks(Mockito.anyString(), Mockito.anyInt())).thenThrow(new AuthenticationException());
+        Response playlistResponse = sut.getAttachedTracks(token, playlistId);
+
+        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), playlistResponse.getStatus());
+    }
+
 
 }

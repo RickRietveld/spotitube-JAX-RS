@@ -3,7 +3,6 @@ package nl.han.oose.entity.track;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class TrackCollection {
     private List<Track> tracks = new ArrayList<>();
 

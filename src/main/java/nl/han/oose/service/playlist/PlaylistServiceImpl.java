@@ -17,6 +17,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     @Inject
     private PlaylistDAO playlistDAO;
+
     @Inject
     private TokenDAO tokenDAO;
 
