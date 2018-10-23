@@ -77,9 +77,10 @@ public class TrackDAO extends Datamapper {
 
         try (
                 Connection connection = connectionFactory.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM track t LEFT JOIN trackPlaylistRelation " +
-                        "ON trackPlaylistRelation.trackId = t.id AND trackPlaylistRelation.playlistId = ? " +
-                        "WHERE t.id IN(SELECT trackId FROM trackPlaylistRelation WHERE playlistId = ?);")
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT t.id, t.title, t.performer, " +
+                        "t.duration, t.album, t.playcount, t.publicationDate, t.description, " +
+                        "r.offlineAvailable FROM track t LEFT JOIN trackPlaylistRelation r ON r.trackId = t.id AND r.playlistId = ? " +
+                        "WHERE t.id IN(SELECT trackId FROM trackPlaylistRelation s WHERE s.playlistId = ?);")
         ) {
             preparedStatement.setInt(1, playlistId);
             preparedStatement.setInt(2, playlistId);
