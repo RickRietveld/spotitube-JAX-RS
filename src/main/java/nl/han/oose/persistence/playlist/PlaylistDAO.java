@@ -101,7 +101,6 @@ public class PlaylistDAO extends Datamapper {
 
             while (resultSet.next()) {
                 playlistLength += resultSet.getInt("summedDuration");
-
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

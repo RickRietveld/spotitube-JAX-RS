@@ -19,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(MockitoJUnitRunner.class)
 public class LoginControllerTest {
 
+    private final Account account = new Account("", "");
     @Mock
     private LoginService loginService;
 
@@ -29,19 +30,15 @@ public class LoginControllerTest {
     public void testThatLoginRespondsOK() throws LoginException {
         UserToken userToken = new UserToken("", "");
         Mockito.when(loginService.login(Mockito.any())).thenReturn(userToken);
-        Account account = new Account("", "");
         Response loginResponse = sut.login(account);
-
         assertEquals(Response.Status.OK.getStatusCode(), loginResponse.getStatus());
         assertEquals(userToken, loginResponse.getEntity());
     }
 
     @Test
     public void testThatLoginRespondsUNAUTHORIZED() throws LoginException {
-        Account account = new Account("", "");
         Mockito.when(loginService.login(Mockito.any())).thenThrow(new LoginException("Incorrect credentials."));
         Response loginResponse = sut.login(account);
-
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), loginResponse.getStatus());
     }
 

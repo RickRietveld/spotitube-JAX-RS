@@ -7,6 +7,7 @@ import nl.han.oose.entity.track.Track;
 import nl.han.oose.entity.track.TrackCollection;
 import nl.han.oose.service.playlist.PlaylistServiceImpl;
 import nl.han.oose.service.track.TrackServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -22,6 +23,14 @@ import static junit.framework.TestCase.assertEquals;
 @RunWith(MockitoJUnitRunner.class)
 public class PlaylistControllerTest {
 
+    private final int PLAYLIST_ID = 1;
+    private final int TRACK_ID = 2;
+    private PlaylistCollection playlistCollection;
+    private Playlist playlist;
+    private TrackCollection trackCollection;
+    private Track track;
+    private String token;
+
     @Mock
     private PlaylistServiceImpl playlistServiceMock;
 
@@ -31,14 +40,19 @@ public class PlaylistControllerTest {
     @InjectMocks
     private PlaylistController sut;
 
+    @Before
+    public void setUp() {
+        playlistCollection = new PlaylistCollection();
+        playlist = new Playlist();
+        trackCollection = new TrackCollection();
+        track = new Track();
+        token = "9999-9999-9999";
+    }
+
     @Test
     public void testThatGetAllPlaylistsRespondsOK() throws AuthenticationException {
-        String token = "9999-9999-9999";
-        PlaylistCollection playlistCollection = new PlaylistCollection();
-
         Mockito.when(playlistServiceMock.getAllPlaylists(Mockito.any())).thenReturn(playlistCollection);
         Response playlistResponse = sut.getAllPlaylists(token);
-
         assertEquals(Response.Status.OK.getStatusCode(), playlistResponse.getStatus());
         assertEquals(playlistCollection, playlistResponse.getEntity());
     }
@@ -46,159 +60,98 @@ public class PlaylistControllerTest {
     @Test
     public void testThatGetAllPlaylistsRespondsUNAUTHORIZED() throws AuthenticationException {
         String token = "";
-
         Mockito.when(playlistServiceMock.getAllPlaylists(Mockito.any())).thenThrow(new AuthenticationException());
         Response playlistResponse = sut.getAllPlaylists(token);
-
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), playlistResponse.getStatus());
     }
 
     @Test
     public void testThatDeletePlaylistRespondsOK() throws AuthenticationException {
-        PlaylistCollection playlistCollection = new PlaylistCollection();
-        String token = "9999-9999-9999";
-        int playlistId = 1;
-
         Mockito.when(playlistServiceMock.deletePlaylist(Mockito.anyString(), Mockito.anyInt())).thenReturn(playlistCollection);
-        Response playlistResponse = sut.deletePlaylist(token, playlistId);
-
+        Response playlistResponse = sut.deletePlaylist(token, PLAYLIST_ID);
         assertEquals(Response.Status.OK.getStatusCode(), playlistResponse.getStatus());
         assertEquals(playlistCollection, playlistResponse.getEntity());
     }
 
     @Test
     public void testThatDeletePlaylistRespondsUNAUTHORIZED() throws AuthenticationException {
-        String token = "9999-9999-9999";
-        int playlistId = 1;
-
         Mockito.when(playlistServiceMock.deletePlaylist(Mockito.anyString(), Mockito.anyInt())).thenThrow(new AuthenticationException());
-        Response playlistResponse = sut.deletePlaylist(token, playlistId);
-
+        Response playlistResponse = sut.deletePlaylist(token, PLAYLIST_ID);
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), playlistResponse.getStatus());
     }
 
     @Test
     public void testThatAddPlaylistRespondsOK() throws AuthenticationException {
-        PlaylistCollection playlists = new PlaylistCollection();
-        String token = "9999-9999-9999";
-        Playlist playlist = new Playlist();
-
-
-        Mockito.when(playlistServiceMock.addPlaylist(Mockito.any(), Mockito.any())).thenReturn(playlists);
+        Mockito.when(playlistServiceMock.addPlaylist(Mockito.any(), Mockito.any())).thenReturn(playlistCollection);
         Response playlistResponse = sut.addPlaylist(token, playlist);
-
         assertEquals(Response.Status.OK.getStatusCode(), playlistResponse.getStatus());
-        assertEquals(playlists, playlistResponse.getEntity());
+        assertEquals(playlistCollection, playlistResponse.getEntity());
     }
 
     @Test
     public void testThatAddPlaylistRespondsUNAUTHORIZED() throws AuthenticationException {
-        Playlist playlist = new Playlist();
-        String token = "9999-9999-9999";
-
         Mockito.when(playlistServiceMock.addPlaylist(Mockito.any(), Mockito.any())).thenThrow(new AuthenticationException());
         Response playlistResponse = sut.addPlaylist(token, playlist);
-
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), playlistResponse.getStatus());
     }
 
     @Test
     public void testThatRenamePlaylistRespondsOK() throws AuthenticationException {
-        PlaylistCollection playlistCollection = new PlaylistCollection();
-        Playlist playlist = new Playlist();
-        String token = "9999-9999-9999";
-
         Mockito.when(playlistServiceMock.renamePlaylist(Mockito.any(), Mockito.any())).thenReturn(playlistCollection);
         Response playlistResponse = sut.renamePlaylist(token, playlist);
-
         assertEquals(Response.Status.OK.getStatusCode(), playlistResponse.getStatus());
         assertEquals(playlistCollection, playlistResponse.getEntity());
     }
 
     @Test
     public void testThatRenamePlaylistRespondsUNAUTHORIZED() throws AuthenticationException {
-        Playlist playlist = new Playlist();
-        String token = "9999-9999-9999";
-
         Mockito.when(playlistServiceMock.renamePlaylist(Mockito.any(), Mockito.any())).thenThrow(new AuthenticationException());
         Response playlistResponse = sut.renamePlaylist(token, playlist);
-
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), playlistResponse.getStatus());
     }
 
     @Test
     public void testThatAddTrackToPlaylistRespondsOK() throws AuthenticationException {
-        TrackCollection trackCollection = new TrackCollection();
-        Track track = new Track();
-        int playlistId = 1;
-        String token = "9999-9999-9999";
-
         Mockito.when(trackServiceMock.addTrackToPlaylist(Mockito.anyString(), Mockito.anyInt(), Mockito.any())).thenReturn(trackCollection);
-        Response playlistResponse = sut.addTrackToPlaylist(token, playlistId, track);
-
+        Response playlistResponse = sut.addTrackToPlaylist(token, PLAYLIST_ID, track);
         assertEquals(Response.Status.OK.getStatusCode(), playlistResponse.getStatus());
         assertEquals(trackCollection, playlistResponse.getEntity());
     }
 
     @Test
     public void testThatAddTrackToPlaylistRespondsUNAUTHORIZED() throws AuthenticationException {
-        Track track = new Track();
-        int playlistId = 1;
-        String token = "9999-9999-9999";
-
         Mockito.when(trackServiceMock.addTrackToPlaylist(Mockito.anyString(), Mockito.anyInt(), Mockito.any())).thenThrow(new AuthenticationException());
-        Response playlistResponse = sut.addTrackToPlaylist(token, playlistId, track);
-
+        Response playlistResponse = sut.addTrackToPlaylist(token, PLAYLIST_ID, track);
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), playlistResponse.getStatus());
     }
 
     @Test
     public void testThatRemoveTrackFromPlaylistRespondsOK() throws AuthenticationException {
-        TrackCollection trackCollection = new TrackCollection();
-        int playlistId = 1;
-        int trackId = 2;
-        String token = "9999-9999-9999";
-
         Mockito.when(trackServiceMock.removeTrackFromPlaylist(Mockito.anyString(), Mockito.anyInt(), Mockito.anyInt())).thenReturn(trackCollection);
-        Response playlistResponse = sut.removeTrackFromPlaylist(token, playlistId, trackId);
-
+        Response playlistResponse = sut.removeTrackFromPlaylist(token, PLAYLIST_ID, TRACK_ID);
         assertEquals(Response.Status.OK.getStatusCode(), playlistResponse.getStatus());
         assertEquals(trackCollection, playlistResponse.getEntity());
     }
 
     @Test
     public void testThatRemoveTrackFromPlaylistRespondsUNAUTHORIZED() throws AuthenticationException {
-        int playlistId = 1;
-        int trackId = 2;
-        String token = "9999-9999-9999";
-
         Mockito.when(trackServiceMock.removeTrackFromPlaylist(Mockito.anyString(), Mockito.anyInt(), Mockito.anyInt())).thenThrow(new AuthenticationException());
-        Response playlistResponse = sut.removeTrackFromPlaylist(token, playlistId, trackId);
-
+        Response playlistResponse = sut.removeTrackFromPlaylist(token, PLAYLIST_ID, TRACK_ID);
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), playlistResponse.getStatus());
     }
 
     @Test
     public void testThatGetAttachedTracksRespondsOK() throws AuthenticationException {
-        TrackCollection trackCollection = new TrackCollection();
-        int playlistId = 1;
-        String token = "9999-9999-9999";
-
         Mockito.when(trackServiceMock.getAttachedTracks(Mockito.anyString(), Mockito.anyInt())).thenReturn(trackCollection);
-        Response playlistResponse = sut.getAttachedTracks(token, playlistId);
-
+        Response playlistResponse = sut.getAttachedTracks(token, PLAYLIST_ID);
         assertEquals(Response.Status.OK.getStatusCode(), playlistResponse.getStatus());
         assertEquals(trackCollection, playlistResponse.getEntity());
     }
 
     @Test
     public void testThatGetAttachedTracksRespondsUNAUTHORIZED() throws AuthenticationException {
-        int playlistId = 1;
-        String token = "9999-9999-9999";
-
         Mockito.when(trackServiceMock.getAttachedTracks(Mockito.anyString(), Mockito.anyInt())).thenThrow(new AuthenticationException());
-        Response playlistResponse = sut.getAttachedTracks(token, playlistId);
-
+        Response playlistResponse = sut.getAttachedTracks(token, PLAYLIST_ID);
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), playlistResponse.getStatus());
     }
 
