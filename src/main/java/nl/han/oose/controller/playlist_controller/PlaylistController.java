@@ -1,9 +1,9 @@
-package nl.han.oose.controller.playlist;
+package nl.han.oose.controller.playlist_controller;
 
-import nl.han.oose.entity.playlist.Playlist;
-import nl.han.oose.entity.track.Track;
-import nl.han.oose.service.playlist.PlaylistServiceImpl;
-import nl.han.oose.service.track.TrackServiceImpl;
+import nl.han.oose.entity.playlist_entity.Playlist;
+import nl.han.oose.entity.track_entity.Track;
+import nl.han.oose.service.playlist_service.PlaylistServiceImpl;
+import nl.han.oose.service.track_service.TrackServiceImpl;
 
 import javax.inject.Inject;
 import javax.naming.AuthenticationException;

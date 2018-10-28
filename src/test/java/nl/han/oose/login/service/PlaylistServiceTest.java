@@ -1,11 +1,11 @@
 package nl.han.oose.login.service;
 
-import nl.han.oose.entity.account.UserToken;
-import nl.han.oose.entity.playlist.Playlist;
-import nl.han.oose.entity.playlist.PlaylistCollection;
-import nl.han.oose.persistence.account.TokenDAO;
-import nl.han.oose.persistence.playlist.PlaylistDAO;
-import nl.han.oose.service.playlist.PlaylistServiceImpl;
+import nl.han.oose.entity.account_entity.UserToken;
+import nl.han.oose.entity.playlist_entity.Playlist;
+import nl.han.oose.entity.playlist_entity.PlaylistCollection;
+import nl.han.oose.persistence.account_dao.TokenDAO;
+import nl.han.oose.persistence.playlist_dao.PlaylistDAO;
+import nl.han.oose.service.playlist_service.PlaylistServiceImpl;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

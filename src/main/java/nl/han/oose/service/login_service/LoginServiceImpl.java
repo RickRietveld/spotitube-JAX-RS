@@ -1,9 +1,9 @@
-package nl.han.oose.service.login;
+package nl.han.oose.service.login_service;
 
-import nl.han.oose.entity.account.Account;
-import nl.han.oose.entity.account.UserToken;
-import nl.han.oose.persistence.account.TokenDAO;
-import nl.han.oose.persistence.account.UserDAO;
+import nl.han.oose.entity.account_entity.Account;
+import nl.han.oose.entity.account_entity.UserToken;
+import nl.han.oose.persistence.account_dao.TokenDAO;
+import nl.han.oose.persistence.account_dao.UserDAO;
 
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
@@ -17,7 +17,6 @@ public class LoginServiceImpl implements LoginService {
 
     @Inject
     private TokenDAO tokenDAO;
-
 
     @Override
     public UserToken login(Account account) throws LoginException {

@@ -1,7 +1,7 @@
-package nl.han.oose.persistence.account;
+package nl.han.oose.persistence.account_dao;
 
-import nl.han.oose.entity.account.Account;
-import nl.han.oose.entity.account.UserToken;
+import nl.han.oose.entity.account_entity.Account;
+import nl.han.oose.entity.account_entity.UserToken;
 import nl.han.oose.persistence.ConnectionFactory;
 
 import javax.inject.Inject;
@@ -42,10 +42,8 @@ public class TokenDAO {
         return userToken;
     }
 
-
     public boolean checkIfTokenAlreadyExists(String username) {
         boolean tokenExists = false;
-
         try (
                 Connection connection = connectionFactory.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM token WHERE user = ?;")
@@ -61,7 +59,6 @@ public class TokenDAO {
         }
         return tokenExists;
     }
-
 
     public UserToken getNewToken(Account login) {
         String user = login.getUser();
@@ -82,7 +79,7 @@ public class TokenDAO {
         }
     }
 
-    public void removeTokenFromList(String user) {
+    private void removeTokenFromList(String user) {
         try (
                 Connection connection = connectionFactory.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM token WHERE user = ?;")
@@ -95,7 +92,6 @@ public class TokenDAO {
     }
 
     private String generateToken() {
-
         return UUID.randomUUID().toString();
     }
 
@@ -121,7 +117,6 @@ public class TokenDAO {
             preparedStatement.setString(2, userToken.getUser());
             ResultSet resultSet = preparedStatement.executeQuery();
             LocalDate currentDate = LocalDate.now();
-
             while (resultSet.next()) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LocalDate expiryDate = LocalDate.parse(resultSet.getString("expiryDate"), formatter);
@@ -146,7 +141,6 @@ public class TokenDAO {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 userToken.setToken(rs.getString("token"));
                 userToken.setUser(rs.getString("user"));

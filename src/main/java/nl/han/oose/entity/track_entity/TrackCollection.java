@@ -1,11 +1,11 @@
-package nl.han.oose.entity.track;
+package nl.han.oose.entity.track_entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TrackCollection {
-    private List<Track> tracks = new ArrayList<>();
 
+    private List<Track> tracks = new ArrayList<>();
 
     public TrackCollection() {
 

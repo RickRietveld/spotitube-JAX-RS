@@ -1,4 +1,4 @@
-package nl.han.oose.entity.account;
+package nl.han.oose.entity.account_entity;
 
 public class UserToken {
 

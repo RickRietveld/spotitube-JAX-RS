@@ -8,7 +8,9 @@ create table playlist
 		primary key,
 	name varchar(255) not null,
 	user varchar(255) not null,
-	owner tinyint(1) not null
+	owner tinyint(1) not null,
+	foreign key (user) references user (user)
+			on update cascade on delete cascade
 )
 ;
 
@@ -17,7 +19,10 @@ create table token
 	token varchar(255) not null
 		primary key,
 	user varchar(255) not null,
-	expiryDate date not null
+	expiryDate date not null,
+	constraint fk_user
+		foreign key (user) references user (user)
+			on update cascade on delete cascade
 )
 ;
 

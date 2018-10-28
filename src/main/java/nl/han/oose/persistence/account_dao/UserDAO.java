@@ -1,8 +1,7 @@
-package nl.han.oose.persistence.account;
+package nl.han.oose.persistence.account_dao;
 
-import nl.han.oose.entity.account.Account;
+import nl.han.oose.entity.account_entity.Account;
 import nl.han.oose.persistence.ConnectionFactory;
-import nl.han.oose.persistence.Datamapper;
 
 import javax.inject.Inject;
 import javax.security.auth.login.LoginException;
@@ -13,8 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class UserDAO extends Datamapper {
+public class UserDAO {
 
     @Inject
     private ConnectionFactory connectionFactory;
@@ -29,7 +27,6 @@ public class UserDAO extends Datamapper {
             while (resultSet.next()) {
                 String user = resultSet.getString("user");
                 String password = resultSet.getString("password");
-
                 accounts.add(new Account(user, password));
             }
         } catch (SQLException e) {
@@ -41,7 +38,7 @@ public class UserDAO extends Datamapper {
     public boolean verifyLogin(Account account) throws LoginException {
         try (
                 Connection connection = connectionFactory.getConnection();
-                PreparedStatement query = connection.prepareStatement("SELECT * FROM user WHERE user = ? AND password = ?;");
+                PreparedStatement query = connection.prepareStatement("SELECT * FROM user WHERE user = ? AND password = ?;")
         ) {
             query.setString(1, account.getUser());
             query.setString(2, account.getPassword());
@@ -61,7 +58,7 @@ public class UserDAO extends Datamapper {
     public void persistAccount(Account account) {
         try (
                 Connection connection = connectionFactory.getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO user (user,password) VALUES (?,?);");
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO user (user,password) VALUES (?,?);")
         ) {
             statement.setString(1, account.getUser());
             statement.setString(2, account.getPassword());

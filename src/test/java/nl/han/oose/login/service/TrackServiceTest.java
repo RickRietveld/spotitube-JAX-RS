@@ -1,11 +1,11 @@
 package nl.han.oose.login.service;
 
-import nl.han.oose.entity.account.UserToken;
-import nl.han.oose.entity.track.Track;
-import nl.han.oose.entity.track.TrackCollection;
-import nl.han.oose.persistence.account.TokenDAO;
-import nl.han.oose.persistence.track.TrackDAO;
-import nl.han.oose.service.track.TrackServiceImpl;
+import nl.han.oose.entity.account_entity.UserToken;
+import nl.han.oose.entity.track_entity.Track;
+import nl.han.oose.entity.track_entity.TrackCollection;
+import nl.han.oose.persistence.account_dao.TokenDAO;
+import nl.han.oose.persistence.track_dao.TrackDAO;
+import nl.han.oose.service.track_service.TrackServiceImpl;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,33 +53,26 @@ public class TrackServiceTest {
 
     @Test
     public void testThatAvailableTrackIsReturnedAfterTokenIsValid() throws AuthenticationException {
-
         Mockito.when(tokenDAO.getUserToken(Mockito.any())).thenReturn(USER_TOKEN);
         Mockito.when(tokenDAO.isTokenValid(Mockito.any(UserToken.class))).thenReturn(true);
         Mockito.when(trackDAO.getAvailableTracks(Mockito.anyInt())).thenReturn(trackCollection);
-
         assertEquals(trackCollection, sut.getAvailableTracks(VALID_TOKEN, PLAYLIST_ID));
     }
 
     @Test
     public void testThatAvailableTracksReturnsExceptionIfTokenIsInvalid() throws AuthenticationException {
-
         thrown.expect(AuthenticationException.class);
         thrown.expectMessage(EXPECTED_MSG);
-
         Mockito.when(tokenDAO.getUserToken(Mockito.any())).thenReturn(USER_TOKEN);
         Mockito.when(tokenDAO.isTokenValid(Mockito.any(UserToken.class))).thenReturn(false);
-
         sut.getAvailableTracks(VALID_TOKEN, PLAYLIST_ID);
     }
 
     @Test
     public void testThatGetAttachedTracksIsReturnedAfterTrackIsAddedAndTokenIsValid() throws AuthenticationException {
-
         Mockito.when(tokenDAO.getUserToken(Mockito.any())).thenReturn(USER_TOKEN);
         Mockito.when(tokenDAO.isTokenValid(Mockito.any(UserToken.class))).thenReturn(true);
         Mockito.when(trackDAO.getAttachedTracks(Mockito.anyInt())).thenReturn(trackCollection);
-
         assertEquals(trackCollection, sut.addTrackToPlaylist(VALID_TOKEN, 1, track));
     }
 
@@ -87,54 +80,42 @@ public class TrackServiceTest {
     public void testThatAddTracksToPlaylistReturnsExceptionIfTokenIsInvalid() throws AuthenticationException {
         thrown.expect(AuthenticationException.class);
         thrown.expectMessage(EXPECTED_MSG);
-
         Mockito.when(tokenDAO.getUserToken(Mockito.any())).thenReturn(USER_TOKEN);
         Mockito.when(tokenDAO.isTokenValid(Mockito.any(UserToken.class))).thenReturn(false);
-
         sut.addTrackToPlaylist(INVALID_TOKEN, PLAYLIST_ID, new Track());
     }
 
     @Test
     public void testThatGetAttachedTracksIsReturnedAfterTrackIsRemovedAndTokenIsValid() throws AuthenticationException {
-
         Mockito.when(tokenDAO.getUserToken(Mockito.anyString())).thenReturn(USER_TOKEN);
         Mockito.when(tokenDAO.isTokenValid(Mockito.any(UserToken.class))).thenReturn(true);
         Mockito.when(trackDAO.getAttachedTracks(Mockito.anyInt())).thenReturn(trackCollection);
-
         assertEquals(trackCollection, sut.removeTrackFromPlaylist(VALID_TOKEN, PLAYLIST_ID, TRACK_ID));
     }
 
     @Test
     public void testThatRemoveTrackFromPlaylistReturnsExceptionIfTokenIsInvalid() throws AuthenticationException {
-
         thrown.expect(AuthenticationException.class);
         thrown.expectMessage(EXPECTED_MSG);
-
         Mockito.when(tokenDAO.getUserToken(Mockito.any())).thenReturn(USER_TOKEN);
         Mockito.when(tokenDAO.isTokenValid(Mockito.any(UserToken.class))).thenReturn(false);
-
         sut.removeTrackFromPlaylist(INVALID_TOKEN, PLAYLIST_ID, TRACK_ID);
     }
 
     @Test
     public void testThatGetAttachedTracksIsReturnedAfterTokenIsValid() throws AuthenticationException {
-
         Mockito.when(tokenDAO.getUserToken(Mockito.anyString())).thenReturn(USER_TOKEN);
         Mockito.when(tokenDAO.isTokenValid(Mockito.any(UserToken.class))).thenReturn(true);
         Mockito.when(trackDAO.getAttachedTracks(Mockito.anyInt())).thenReturn(trackCollection);
-
         assertEquals(trackCollection, sut.getAttachedTracks(VALID_TOKEN, PLAYLIST_ID));
     }
 
     @Test
     public void testThatGetAttachedTracksReturnsExceptionIfTokenIsInvalid() throws AuthenticationException {
-
         thrown.expect(AuthenticationException.class);
         thrown.expectMessage(EXPECTED_MSG);
-
         Mockito.when(tokenDAO.getUserToken(Mockito.any())).thenReturn(USER_TOKEN);
         Mockito.when(tokenDAO.isTokenValid(Mockito.any(UserToken.class))).thenReturn(false);
-
         sut.getAttachedTracks(INVALID_TOKEN, PLAYLIST_ID);
     }
 }

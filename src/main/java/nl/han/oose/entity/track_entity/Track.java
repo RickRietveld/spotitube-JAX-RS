@@ -1,4 +1,4 @@
-package nl.han.oose.entity.track;
+package nl.han.oose.entity.track_entity;
 
 
 public class Track {

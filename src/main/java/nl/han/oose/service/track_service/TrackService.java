@@ -1,7 +1,7 @@
-package nl.han.oose.service.track;
+package nl.han.oose.service.track_service;
 
-import nl.han.oose.entity.track.Track;
-import nl.han.oose.entity.track.TrackCollection;
+import nl.han.oose.entity.track_entity.Track;
+import nl.han.oose.entity.track_entity.TrackCollection;
 
 import javax.naming.AuthenticationException;
 

@@ -1,9 +1,8 @@
-package nl.han.oose.persistence.track;
+package nl.han.oose.persistence.track_dao;
 
-import nl.han.oose.entity.track.Track;
-import nl.han.oose.entity.track.TrackCollection;
+import nl.han.oose.entity.track_entity.Track;
+import nl.han.oose.entity.track_entity.TrackCollection;
 import nl.han.oose.persistence.ConnectionFactory;
-import nl.han.oose.persistence.Datamapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class TrackDAO extends Datamapper {
+public class TrackDAO {
 
     private ConnectionFactory connectionFactory;
 

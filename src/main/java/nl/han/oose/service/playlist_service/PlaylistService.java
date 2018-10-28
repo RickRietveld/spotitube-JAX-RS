@@ -1,7 +1,7 @@
-package nl.han.oose.service.playlist;
+package nl.han.oose.service.playlist_service;
 
-import nl.han.oose.entity.playlist.Playlist;
-import nl.han.oose.entity.playlist.PlaylistCollection;
+import nl.han.oose.entity.playlist_entity.Playlist;
+import nl.han.oose.entity.playlist_entity.PlaylistCollection;
 
 import javax.naming.AuthenticationException;
 

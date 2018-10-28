@@ -1,6 +1,6 @@
-package nl.han.oose.controller.track;
+package nl.han.oose.controller.track_controller;
 
-import nl.han.oose.service.track.TrackServiceImpl;
+import nl.han.oose.service.track_service.TrackServiceImpl;
 
 import javax.inject.Inject;
 import javax.naming.AuthenticationException;
@@ -16,7 +16,6 @@ public class TrackController {
 
     @Inject
     private TrackServiceImpl trackService;
-
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -1,12 +1,12 @@
 package nl.han.oose.login.controller;
 
-import nl.han.oose.controller.playlist.PlaylistController;
-import nl.han.oose.entity.playlist.Playlist;
-import nl.han.oose.entity.playlist.PlaylistCollection;
-import nl.han.oose.entity.track.Track;
-import nl.han.oose.entity.track.TrackCollection;
-import nl.han.oose.service.playlist.PlaylistServiceImpl;
-import nl.han.oose.service.track.TrackServiceImpl;
+import nl.han.oose.controller.playlist_controller.PlaylistController;
+import nl.han.oose.entity.playlist_entity.Playlist;
+import nl.han.oose.entity.playlist_entity.PlaylistCollection;
+import nl.han.oose.entity.track_entity.Track;
+import nl.han.oose.entity.track_entity.TrackCollection;
+import nl.han.oose.service.playlist_service.PlaylistServiceImpl;
+import nl.han.oose.service.track_service.TrackServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

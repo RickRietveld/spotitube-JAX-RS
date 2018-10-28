@@ -1,8 +1,8 @@
 package nl.han.oose.login.controller;
 
-import nl.han.oose.controller.track.TrackController;
-import nl.han.oose.entity.track.TrackCollection;
-import nl.han.oose.service.track.TrackServiceImpl;
+import nl.han.oose.controller.track_controller.TrackController;
+import nl.han.oose.entity.track_entity.TrackCollection;
+import nl.han.oose.service.track_service.TrackServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

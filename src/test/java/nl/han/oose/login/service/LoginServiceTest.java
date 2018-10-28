@@ -1,10 +1,10 @@
 package nl.han.oose.login.service;
 
-import nl.han.oose.entity.account.Account;
-import nl.han.oose.entity.account.UserToken;
-import nl.han.oose.persistence.account.TokenDAO;
-import nl.han.oose.persistence.account.UserDAO;
-import nl.han.oose.service.login.LoginServiceImpl;
+import nl.han.oose.entity.account_entity.Account;
+import nl.han.oose.entity.account_entity.UserToken;
+import nl.han.oose.persistence.account_dao.TokenDAO;
+import nl.han.oose.persistence.account_dao.UserDAO;
+import nl.han.oose.service.login_service.LoginServiceImpl;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
