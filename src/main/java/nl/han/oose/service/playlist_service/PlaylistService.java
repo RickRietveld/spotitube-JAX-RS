@@ -10,7 +10,7 @@ public interface PlaylistService {
 
     PlaylistCollection addPlaylist(String token, Playlist playlist) throws AuthenticationException;
 
-    PlaylistCollection renamePlaylist(String token, Playlist playlist) throws AuthenticationException;
+    PlaylistCollection renamePlaylist(String token, int id, Playlist playlist) throws AuthenticationException;
 
     PlaylistCollection deletePlaylist(String token, int id) throws AuthenticationException;
 

@@ -41,10 +41,10 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
-    public PlaylistCollection renamePlaylist(String token, Playlist playlist) throws AuthenticationException {
+    public PlaylistCollection renamePlaylist(String token, int playlistId, Playlist playlist) throws AuthenticationException {
         UserToken userToken = getUserToken(token);
         if (tokenDAO.isTokenValid(userToken)) {
-            playlistDAO.renamePlaylist(playlist);
+            playlistDAO.renamePlaylist(playlistId, playlist);
             return getAllPlaylists(token);
         } else {
             throw new AuthenticationException("Usertoken mismatch.");

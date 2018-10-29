@@ -71,7 +71,7 @@ public class PlaylistServiceTest {
         Mockito.when(userTokenDAOMock.getUserToken(Mockito.any())).thenReturn(USER_TOKEN);
         Mockito.when(userTokenDAOMock.isTokenValid(Mockito.any(UserToken.class))).thenReturn(true);
         Mockito.when(playlistDAOMock.getAllPlaylists(Mockito.any())).thenReturn(playlistCollection);
-        assertEquals(playlistCollection, sut.renamePlaylist(VALID_TOKEN, playlist));
+        assertEquals(playlistCollection, sut.renamePlaylist(VALID_TOKEN, PLAYLIST_ID, playlist));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class PlaylistServiceTest {
         thrown.expectMessage(EXPECTED_MSG);
         Mockito.when(userTokenDAOMock.getUserToken(Mockito.any())).thenReturn(USER_TOKEN);
         Mockito.when(userTokenDAOMock.isTokenValid(Mockito.any(UserToken.class))).thenReturn(false);
-        sut.renamePlaylist(INVALID_TOKEN, playlist);
+        sut.renamePlaylist(INVALID_TOKEN, PLAYLIST_ID, playlist);
     }
 
     @Test

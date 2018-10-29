@@ -97,16 +97,16 @@ public class PlaylistControllerTest {
 
     @Test
     public void testThatRenamePlaylistRespondsOK() throws AuthenticationException {
-        Mockito.when(playlistServiceMock.renamePlaylist(Mockito.any(), Mockito.any())).thenReturn(playlistCollection);
-        Response playlistResponse = sut.renamePlaylist(token, playlist);
+        Mockito.when(playlistServiceMock.renamePlaylist(Mockito.any(), Mockito.anyInt(), Mockito.any())).thenReturn(playlistCollection);
+        Response playlistResponse = sut.renamePlaylist(token, PLAYLIST_ID, playlist);
         assertEquals(Response.Status.OK.getStatusCode(), playlistResponse.getStatus());
         assertEquals(playlistCollection, playlistResponse.getEntity());
     }
 
     @Test
     public void testThatRenamePlaylistRespondsUNAUTHORIZED() throws AuthenticationException {
-        Mockito.when(playlistServiceMock.renamePlaylist(Mockito.any(), Mockito.any())).thenThrow(new AuthenticationException());
-        Response playlistResponse = sut.renamePlaylist(token, playlist);
+        Mockito.when(playlistServiceMock.renamePlaylist(Mockito.any(), Mockito.anyInt(), Mockito.any())).thenThrow(new AuthenticationException());
+        Response playlistResponse = sut.renamePlaylist(token, PLAYLIST_ID, playlist);
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), playlistResponse.getStatus());
     }
 

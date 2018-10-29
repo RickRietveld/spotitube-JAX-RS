@@ -94,13 +94,13 @@ public class PlaylistDAO {
         return playlistLength;
     }
 
-    public void renamePlaylist(Playlist playlist) {
+    public void renamePlaylist(int playlistId, Playlist playlist) {
         try (
                 Connection connection = connectionFactory.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement("UPDATE playlist SET name = ? WHERE id = ?;")
         ) {
             preparedStatement.setString(1, playlist.getName());
-            preparedStatement.setInt(2, playlist.getId());
+            preparedStatement.setInt(2, playlistId);
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);

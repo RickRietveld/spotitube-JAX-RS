@@ -65,9 +65,9 @@ public class PlaylistController {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response renamePlaylist(@QueryParam("token") String token, Playlist playlist) {
+    public Response renamePlaylist(@QueryParam("token") String token, @PathParam("id") int id, Playlist playlist) {
         try {
-            return Response.status(Response.Status.OK).entity(playlistService.renamePlaylist(token, playlist)).build();
+            return Response.status(Response.Status.OK).entity(playlistService.renamePlaylist(token, id, playlist)).build();
         } catch (AuthenticationException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
